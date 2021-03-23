@@ -1,6 +1,6 @@
 <template>
   <div>
-      <ul>
+      <transition-group name="slide-fade" tag="ul">
           <li v-for="(todoItem,index) in propsdata" v-bind:key="todoItem.item">
               <i class="checkBtn fas fa-check" 
               v-bind:class="{checkBtnCompleted : todoItem.completed}" 
@@ -10,7 +10,8 @@
                   <i class="fas fa-trash"></i>
               </span>
           </li>
-      </ul>
+      
+      </transition-group>
   </div>
 </template>
 
@@ -18,10 +19,10 @@
 export default {
     props : ['propsdata'],
     methods : {
-        removeTodo : function(todoItem,index) {
+        removeTodo (todoItem,index) {
             this.$emit('removeItem', todoItem ,index); 
         },
-        toggleComplete: function(todoItem,index) {
+        toggleComplete(todoItem,index) {
             this.$emit('toggleComplete',todoItem,index);
         }
     },
@@ -68,4 +69,17 @@ li {
     color : #de4343;
 }
 
+/* 애니메이션 진입 및 진출은 다른 지속 시간 및  */
+/* 타이밍 기능을 사용할 수 있습니다. */
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
 </style>
